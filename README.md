@@ -58,20 +58,21 @@ class HRContract(models.Model):
 
 ## Step 2: Generate the Endpoint via UI
 
-Navigate to: **Settings → Technical → Action Endpoints → Quản lý Endpoints**
+Navigate to: **Settings → Technical → Action Endpoints → Manage Endpoints**
 
-1. Click **New**, đặt tên cấu hình và chọn model đích (e.g., `hr.contract`)
-2. Click button **"Sinh Endpoint Actions"** trên header
-3. Hệ thống sẽ tự động:
-   - Scan model
-   - Generate execution string (e.g., `action = model.api_reject_contract()`)
-   - Liệt kê trong notebook
-   - Refresh view
+1. Click **New**, name the configuration and select the target model (e.g., `hr.contract`)
+2. Click the **"Generate Endpoint Actions"** button in the header
+3. The system will automatically:
+   - Scan the model
+   - Generate the execution string (e.g., `action = model.api_reject_contract()`)
+   - List it under the notebook
+   - Refresh the view
 
+---
 
 ## Step 3: Trigger the Endpoint from an HTTP/JSON Controller
 
-Inject payload từ request vào context bằng `.with_context()` rồi execute Server Action qua `.run()`.
+Inject the incoming request payload into the context using `.with_context()` and execute the target Server Action via `.run()`.
 
 ```python
 # file: custom_module/controllers/main.py
@@ -103,10 +104,10 @@ class ContractApiController(http.Controller):
 
 ### 🔐 Access Control & Security
 
-Khi expose endpoint với `auth='public'`, luôn execute server action với elevated privileges:
+When exposing an endpoint with `auth='public'`, always execute server actions with elevated privileges:
 
 ```python
 .sudo()
 ```
 
-Nếu không, sẽ phát sinh `AccessError` do ACL restrictions.
+This prevents `AccessError` caused by ACL restrictions.
